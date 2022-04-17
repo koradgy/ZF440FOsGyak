@@ -18,7 +18,7 @@ int main()
     int flag;
     int rtn, size;
     int ok = 1, count = 1;
-
+    printf("varom az uzenetet!\n");
     char teszt[256];
     key = MSGKEY;
     flag = 00666 | IPC_CREAT;
@@ -29,11 +29,12 @@ int main()
     }
 
     do {
-        scanf("%s", teszt);
+        scanf(" %[^\n]s", teszt);
+       // fgets(teszt, 256, stdin);
         msgp = &sndbuf;
-        msgp->mtype = 1;   			/* tipus = text */
+        msgp->mtype = 1;   
         strcpy(msgp->mtext,teszt);
-        size = strlen(msgp->mtext) + 1;	/* az uzenet hossza */
+        size = strlen(msgp->mtext) + 1;
 
         if(strcmp("exit",teszt) != 0) {
             rtn = msgsnd(id,(struct msgbuf *) msgp, size, flag);
@@ -48,5 +49,6 @@ int main()
         }
 
     } while(ok == 1);
+    
     return 0;
 }
